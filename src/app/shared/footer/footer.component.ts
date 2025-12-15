@@ -12,7 +12,6 @@ import { VersionService } from 'app/system/version.service';
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { NgClass, DatePipe } from '@angular/common';
-import { MatDivider } from '@angular/material/divider';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -25,7 +24,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     NgClass,
-    MatDivider,
     DatePipe
   ]
 })
@@ -38,6 +36,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   private versionService = inject(VersionService);
 
   @Input() styleClass: string = '';
+  @Input() variant: 'default' | 'compact' = 'default';
 
   /** Mifos X version. */
   versions: any = {

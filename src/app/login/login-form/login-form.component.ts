@@ -8,7 +8,8 @@ import { finalize } from 'rxjs/operators';
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { MatPrefix } from '@angular/material/form-field';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { M3IconComponent } from '../../shared/m3-ui/m3-icon/m3-icon.component';
+import { M3ButtonComponent } from '../../shared/m3-ui/m3-button/m3-button.component';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -25,7 +26,8 @@ import { environment } from '../../../environments/environment';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
-    FaIconComponent,
+    M3IconComponent,
+    M3ButtonComponent,
     MatProgressBar,
     MatProgressSpinner
   ]

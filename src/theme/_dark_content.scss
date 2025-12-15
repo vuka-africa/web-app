@@ -258,7 +258,7 @@ body.dark-theme {
   }
 
   .copy-label {
-    color: white !important;
+    color: var(--md-sys-color-on-surface-variant, #c4c6d0);
 
     p {
       color: white !important;

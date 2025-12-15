@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
@@ -26,6 +26,12 @@ export class ServerSelectorComponent implements OnInit {
   private settingsService = inject(SettingsService);
   dialog = inject(MatDialog);
   private formBuilder = inject(UntypedFormBuilder);
+
+  /** Appearance of the form field (fill, outline). Defaults to 'fill'. */
+  @Input() appearance: 'fill' | 'outline' = 'fill';
+
+  /** Show label in the form field. Defaults to true. */
+  @Input() showLabel: boolean = true;
 
   /** Input server. */
   form: any;

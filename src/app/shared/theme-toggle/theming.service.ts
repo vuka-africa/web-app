@@ -41,8 +41,10 @@ export class ThemingService {
     this.darkModeOn = isDarkMode;
     if (isDarkMode) {
       document.body.classList.add('dark-theme');
+      document.body.classList.remove('light-theme');
       this.theme.next('dark-theme');
     } else {
+      document.body.classList.add('light-theme');
       document.body.classList.remove('dark-theme');
       this.theme.next('light-theme');
     }

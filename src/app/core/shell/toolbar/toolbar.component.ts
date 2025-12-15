@@ -16,7 +16,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -31,7 +31,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 import { ConfigurationWizardComponent } from '../../../configuration-wizard/configuration-wizard.component';
 import { NotificationsTrayComponent } from 'app/shared/notifications-tray/notifications-tray.component';
 import { MatToolbar } from '@angular/material/toolbar';
-import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
@@ -42,8 +42,6 @@ import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../.
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
-
-import { environment } from '../../../../environments/environment';
 
 /**
  * Toolbar component.

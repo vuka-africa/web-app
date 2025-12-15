@@ -10,6 +10,7 @@ import { Alert } from '../core/alert/alert.model';
 
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
+import { ThemingService } from '../shared/theme-toggle/theming.service';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
@@ -21,11 +22,11 @@ import { TenantSelectorComponent } from '../shared/tenant-selector/tenant-select
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
-import { MatList, MatListItem } from '@angular/material/list';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
 
 /**
  * Login component.
@@ -43,18 +44,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoginFormComponent,
     ResetPasswordComponent,
     TwoFactorAuthenticationComponent,
-    MatList,
-    MatListItem,
     MatMenuTrigger,
     FooterComponent,
     FaIconComponent,
     MatMenu,
-    MatMenuItem
+    MatMenuItem,
+    M3IconComponent
   ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private alertService = inject(AlertService);
   private settingsService = inject(SettingsService);
+  private themingService = inject(ThemingService);
   private router = inject(Router);
 
   public environment = environment;
@@ -66,12 +67,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** Subscription to alerts. */
   alert$: Subscription;
   logoPath = 'assets/images/default_home.png';
+  /** Subscription to theme changes. */
+  theme$: Subscription;
+
+  themeDarkEnabled: boolean = false;
 
   /**
-   * Subscribes to alert event of alert service.
+   * Subscribes to alert event of alert service and theme changes.
    */
   ngOnInit() {
     this.updateLogo();
+    this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
+    // Subscribe to theme changes
+    this.theme$ = this.themingService.theme.subscribe((value: string) => {
+      this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
+    });
+
+    // Initialize theme based on settings
+    this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
+
+    // Subscribe to alerts
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === 'Password Expired') {
@@ -91,10 +106,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Unsubscribes from alerts.
+   * Unsubscribes from alerts and theme changes.
    */
   ngOnDestroy() {
-    this.alert$.unsubscribe();
+    if (this.alert$) {
+      this.alert$.unsubscribe();
+    }
+    if (this.theme$) {
+      this.theme$.unsubscribe();
+    }
   }
 
   reloadSettings(): void {
