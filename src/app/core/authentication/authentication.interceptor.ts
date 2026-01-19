@@ -39,8 +39,15 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   /**
    * Intercepts a Http request and sets the request headers.
+   * Skips adding Fineract headers for OAuth/OIDC endpoints (handled by angular-oauth2-oidc).
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Skip adding Fineract headers for OAuth/OIDC token endpoints
+    const oauthServerUrl = environment.oauth.serverUrl;
+    if (oauthServerUrl && request.url.startsWith(oauthServerUrl)) {
+      return next.handle(request);
+    }
+
     if (this.settingsService.tenantIdentifier) {
       httpOptions.headers['Fineract-Platform-TenantId'] = this.settingsService.tenantIdentifier;
     }
