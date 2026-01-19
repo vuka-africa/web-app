@@ -34,14 +34,16 @@ export const environment = {
   apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   oauth: {
-    enabled: loadedEnv.oauthServerEnabled === true,
+    // Support both boolean true and string 'true' from environment
+    enabled: loadedEnv.oauthServerEnabled === true || loadedEnv.oauthServerEnabled === 'true',
     serverUrl: loadedEnv.oauthServerUrl || '',
     logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
     appId: loadedEnv.oauthAppId || '',
     authorizeUrl: loadedEnv.oauthAuthorizeUrl || '',
     tokenUrl: loadedEnv.oauthTokenUrl || '',
     redirectUri: loadedEnv.oauthRedirectUri || '',
-    scope: loadedEnv.oauthScope || ''
+    scope: loadedEnv.oauthScope || '',
+    realm: loadedEnv.oauthRealm || ''
   },
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,

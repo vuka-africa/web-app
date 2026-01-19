@@ -69,21 +69,38 @@ function getOIDCConfig(): AuthConfig {
 }
 
 /**
- * Creates the configuration required for classic OAuth2 providers (e.g., Fineract).
+ * Creates the configuration required for classic OAuth2 providers (e.g., Keycloak, Fineract).
  * @returns {AuthConfig} OAuth2 configuration block.
  */
 function getOAuth2Config(): AuthConfig {
   const frontendUrl = window.location.origin;
+  const serverUrl = environment.oauth.serverUrl;
+
+  // Support Keycloak realm configuration (defaults to 'fineract' realm)
+  const realm = environment.oauth.realm || 'fineract';
+
+  // Auto-construct Keycloak endpoints if not explicitly provided
+  // Keycloak URL pattern: https://auth.example.com/realms/{realm}/protocol/openid-connect/{endpoint}
+  const authorizeUrl =
+    environment.oauth.authorizeUrl || (serverUrl ? `${serverUrl}/realms/${realm}/protocol/openid-connect/auth` : '');
+  const tokenUrl =
+    environment.oauth.tokenUrl || (serverUrl ? `${serverUrl}/realms/${realm}/protocol/openid-connect/token` : '');
+  const logoutUrl =
+    environment.oauth.logoutUrl || (serverUrl ? `${serverUrl}/realms/${realm}/protocol/openid-connect/logout` : '');
+
+  // Sensible defaults for redirect URI and scope
+  const redirectUri = environment.oauth.redirectUri || `${frontendUrl}/#/callback`;
+  const scope = environment.oauth.scope || 'openid profile email';
 
   return {
-    issuer: environment.oauth.serverUrl,
-    loginUrl: environment.oauth.authorizeUrl,
-    tokenEndpoint: environment.oauth.tokenUrl,
-    redirectUri: environment.oauth.redirectUri,
+    issuer: `${serverUrl}/realms/${realm}`,
+    loginUrl: authorizeUrl,
+    tokenEndpoint: tokenUrl,
+    redirectUri: redirectUri,
     postLogoutRedirectUri: `${frontendUrl}/#/login`,
     clientId: environment.oauth.appId,
     responseType: 'code',
-    scope: environment.oauth.scope,
+    scope: scope,
     useSilentRefresh: false,
     oidc: false,
     // Skip issuer validation for OAuth2 (non-OIDC) flows
