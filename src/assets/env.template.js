@@ -66,6 +66,9 @@
   // OAuth Client Id
   window['env']['oauthAppId'] = '$MIFOS_OAUTH_CLIENT_ID';
 
+  // OAuth Scope (space-separated list of scopes)
+  window['env']['oauthScope'] = '$MIFOS_OAUTH_SCOPE';
+
   // Min Password length
   window['env']['minPasswordLength'] = '$MIFOS_MIN_PASSWORD_LENGTH';
 
