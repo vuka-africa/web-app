@@ -40,16 +40,16 @@ export const environment = {
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
   oauth: {
-    // Support both boolean true and string 'true' from environment
-    enabled: loadedEnv.oauthServerEnabled === true || loadedEnv.oauthServerEnabled === 'true',
-    serverUrl: loadedEnv.oauthServerUrl || '',
-    logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
-    appId: loadedEnv.oauthAppId || '',
-    authorizeUrl: loadedEnv.oauthAuthorizeUrl || '',
-    tokenUrl: loadedEnv.oauthTokenUrl || '',
-    redirectUri: loadedEnv.oauthRedirectUri || '',
-    scope: loadedEnv.oauthScope || '',
-    realm: loadedEnv.oauthRealm || ''
+    // Support both boolean true and string 'true' from environment (bracket notation bypasses strict type check)
+    enabled: loadedEnv['oauthServerEnabled'] === true || loadedEnv['oauthServerEnabled'] === 'true',
+    serverUrl: loadedEnv['oauthServerUrl'] || '',
+    logoutUrl: loadedEnv['oauthServerLogoutUrl'] || '',
+    appId: loadedEnv['oauthAppId'] || '',
+    authorizeUrl: loadedEnv['oauthAuthorizeUrl'] || '',
+    tokenUrl: loadedEnv['oauthTokenUrl'] || '',
+    redirectUri: loadedEnv['oauthRedirectUri'] || '',
+    scope: loadedEnv['oauthScope'] || '',
+    realm: loadedEnv['oauthRealm'] || ''
   },
   warningDialog: {
     title: 'Warning',
