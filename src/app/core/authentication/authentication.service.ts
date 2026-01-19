@@ -230,9 +230,9 @@ export class AuthenticationService {
           }
         });
       } else if (this.authMode === AuthMode.OAuth2) {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
-        const url = `${environment.oauth.serverUrl}/userdetails`;
-        this.http.get<Credentials>(url, { headers }).subscribe({
+        // For Keycloak OAuth2, call Fineract backend to get user details
+        // The token is already set in the interceptor, so we can call the API directly
+        this.http.post<Credentials>('/authentication/userdetails', { token: accessToken }).subscribe({
           next: (credentials) => {
             credentials.accessToken = accessToken;
             this.onLoginSuccess(credentials);
